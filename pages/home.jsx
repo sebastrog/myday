@@ -35,7 +35,7 @@ const Home = () => {
         modal={modal}  */
       />
 
-      <div className="mt-5 px-5">
+      <div className="mt-5 px-5 fromdev">
         <Masonry handleModal={handleModal} modal={modal} />
       </div>
 
