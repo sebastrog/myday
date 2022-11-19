@@ -1,8 +1,5 @@
 import Masonry from 'react-masonry-css'
-import { BsCalendarCheckFill, BsFillStopwatchFill, BsPencilFill, BsBookmarkHeartFill } from "react-icons/bs";
-import { RiDeleteBin5Fill, RiPencilFill, RiStickyNoteFill } from "react-icons/ri";
 import Note from './Note';
-import { useState } from 'react';
 
 const mockNotes = [
   {
@@ -77,8 +74,7 @@ const breakpointColumnsObj = {
   default: 5, 1460: 3, 1024: 2, 600: 1
 };
 
-const MasonryLayout = ({handleModal, handleModalComponent, modal}) => {
-  const [notes, setNotes] = useState(mockNotes)
+const MasonryLayout = ({handleModal, handleModalComponent, modal, notes}) => {
 
   return <>
     <Masonry
