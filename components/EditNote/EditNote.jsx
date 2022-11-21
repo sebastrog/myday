@@ -11,14 +11,14 @@ import AddTag from "./AddTag";
 
 import "react-datetime/css/react-datetime.css";
 
-const EditNote = ({editObj: {id, note, tags, favorite, createdAt, todos, reminderAt}}) => {
+const EditNote = ({newNote, editObj: {id, note, tags, favorite, createdAt, todos, reminderAt}}) => {
 
   const [showDelete, setShowDelete] = useState(false)
   const [markedAsFavofite, setMarkedAsFavofite] = useState(favorite)
-  const [noteReminder, setReminder] = useState(reminderAt)
+  const [noteReminder, setReminder] = useState(reminderAt ? reminderAt : '')
   const [noteText, setNoteText] = useState(note)
-  const [noteTodos, setNoteTodos] = useState(todos)
-  const [noteTags, setNoteTags] = useState(tags)
+  const [noteTodos, setNoteTodos] = useState(todos ? todos : [])
+  const [noteTags, setNoteTags] = useState(tags ? tags : [])
 
   const removeReminder = () => {
     setReminder('')
@@ -57,6 +57,22 @@ const EditNote = ({editObj: {id, note, tags, favorite, createdAt, todos, reminde
     setNoteTags(tagToDelete)
   }
 
+  const saveNote = () => {
+    if(noteText || noteTodos.length > 0 ) {
+      newNote(
+        {
+          id: new Date().getTime(),
+          note: noteText,
+          tags: noteTags,
+          favorite: markedAsFavofite,
+          createdAt: new Date(),
+          todos: noteTodos,
+          reminderAt: noteReminder,
+        }
+      )
+    }
+  }
+
   return <>
     <div className={`relative`}>
       <div className="w-full text-sm rounded bgTertiary text-white">
@@ -85,7 +101,7 @@ const EditNote = ({editObj: {id, note, tags, favorite, createdAt, todos, reminde
           </div>
 
           {
-            !!noteTodos.length &&
+            !!noteTodos?.length > 0 &&
             <Todos todos={noteTodos} deleteTodo={deleteTodo} />
           }
 
@@ -95,7 +111,7 @@ const EditNote = ({editObj: {id, note, tags, favorite, createdAt, todos, reminde
 
           <div className="flex items-center justify-end mb-3">
             {
-              !!noteTags.length &&
+              !!noteTags?.length > 0 &&
               <Tags tags={noteTags} deleteTag={deleteTag} />
             }
 
@@ -114,7 +130,7 @@ const EditNote = ({editObj: {id, note, tags, favorite, createdAt, todos, reminde
               <BsFillCalendar2CheckFill />
               <h2 className="flex items-center">
                 <Datetime 
-                  initialValue={createdAt}
+                  initialValue={createdAt ? createdAt : new Date()}
                   className="ml-1 dateAndTimePicker dateAndTimePicker_date dateAndTimePicker_up" 
                   closeOnSelect={true} 
                   dateFormat="DD MMM YYYY"
@@ -126,6 +142,7 @@ const EditNote = ({editObj: {id, note, tags, favorite, createdAt, todos, reminde
           <div className="flex items-center gap-5 justify-center">
             <button 
               className="text-sm rounded bgPrimary text-black font-bold py-1 px-5 block"
+              onClick={saveNote}
             >
               save note
             </button>

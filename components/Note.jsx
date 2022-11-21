@@ -81,7 +81,7 @@ const Note = ({id, note, tags, favorite, createdAt, todos, reminderAt, handleMod
                   <RiHeartFill className={`text-lg ${favorite && "colorPrimary"}`} />
                 </button>
               </div>
-              <p className="bgSecondary py-2 px-4 rounded ml-2">{createdAt}</p>
+              <p className="bgSecondary py-2 px-4 rounded ml-2">{/* createdAt */}</p>
             </div>
           </div>
       </div>
